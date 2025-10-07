@@ -1,0 +1,28 @@
+async function fetchUserData() {
+    const apiUrl = 'https://jsonplaceholder.typicode.com/users';
+
+    const datacontainer = document.getElementById('api-data');
+
+
+    try {
+        const response = await fetch(apiUrl);
+        const users = await response.json();
+
+        datacontainer.innerHTML = '';
+
+        const userList = document.createElement('ul');
+        users.forEach(user => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `${user.name} (${user.email})`;
+            userList.appendChild(listItem);
+        });
+        datacontainer.appendChild(userList);
+    }
+    catch (error) {
+        console.error('Error fetching data:', error);
+        datacontainer.innerHTML = 'Failed to load user data.';
+    }
+
+}
+
+document.addEventListener('DOMContentLoaded', fetchUserData);
